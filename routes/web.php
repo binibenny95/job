@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\JobsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -20,9 +21,32 @@ use App\Http\Controllers\UserController;
 //});
 // to get all users.
 Route::get('/', [UserController::class,'index'])->name('home');
-Route::get('/account/register', [AccountController::class,'registration'])->name('account.registraion');
-Route::post('/account/process-register', [AccountController::class,'processRegistration'])->name('account.processRegistraion');
-Route::get('/account/login', [AccountController::class,'login'])->name('account.login');
+Route::get('/jobs',[JobsController::class,'index'])->name('job.jobs');
+Route::get('/jobs/detail/{id}',[JobsController::class,'detail'])->name('jobDetail');
+
+
+
+
 
 // to list all jobs.
 //Route::get('/jobs', [UserController::class,'listJobs'])->name('listJobs');
+
+
+Route::group(['account'], function(){
+
+    //Guest Route
+    Route::group(['middleware' => 'guest'], function(){
+        Route::get('/account/register', [AccountController::class,'registration'])->name('account.registraion');
+        Route::post('/account/process-register', [AccountController::class,'processRegistration'])->name('account.processRegistraion');
+        Route::get('/account/login', [AccountController::class,'login'])->name('account.login'); 
+        Route::post('/account/authenticate', [AccountController::class,'authenticate'])->name('account.authenticate');
+    });
+
+
+    // Authenticated routes
+    Route::group(['middleware' => 'auth'], function(){
+        Route::get('/account/profile', [AccountController::class,'profile'])->name('account.profile');
+        Route::get('/account/logout', [AccountController::class,'logout'])->name('account.logout'); 
+    });
+
+});
