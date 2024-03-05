@@ -20,10 +20,10 @@ use App\Http\Controllers\UserController;
    // return view('welcome');
 //});
 // to get all users.
-Route::get('/', [UserController::class,'index'])->name('home');
+Route::get('/home', [UserController::class,'index'])->name('home');
 Route::get('/jobs',[JobsController::class,'index'])->name('job.jobs');
 Route::get('/jobs/detail/{id}',[JobsController::class,'detail'])->name('jobDetail');
-
+Route::post('/save-job',[JobsController::class,'saveJob'])->name('saveJob');
 
 
 

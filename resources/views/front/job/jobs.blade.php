@@ -6,14 +6,7 @@
             <div class="col-6 col-md-10 ">
                 <h2>Find Jobs</h2>  
             </div>
-            <div class="col-6 col-md-2">
-                <div class="align-end">
-                    <select name="sort" id="sort" class="form-control">
-                        <option value="1">Latest</option>
-                        <option value="0">Oldest</option>
-                    </select>
-                </div>
-            </div>
+          
         </div>
 
         <div class="row pt-5">
@@ -24,7 +17,7 @@
                     <div class="job_lists">
                     <div class="row">
                         @if($jobs->isNotEmpty())
-                           
+                        
                         @foreach ($jobs as $job)
                         <div class="col-md-4">
                             <div class="card border-0 p-3 shadow mb-4">

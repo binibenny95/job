@@ -12,17 +12,14 @@ class UserController extends Controller
 
   public function index()
   {
-    //$users = DB::table('user')->get();
-   // return json_encode($users);
-   return view('front.home');
+    
+      $jobs = DB::table('job')->get();
+      return view('front.home',[
+        'jobs' => $jobs,
+        'userArray' =>collect(),
+      ]);
+     
+  
   }
-
-  // list all jobs
-
-  // public function listJobs()
-  // {
-  //   $jobs = DB::table('job')->get();
-  //   return json_encode($jobs);
-  // }
 
 }

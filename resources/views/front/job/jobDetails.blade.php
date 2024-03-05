@@ -37,7 +37,7 @@
                             </div>
                             <div class="jobs_right">
                                 <div class="apply_now">
-                                    <a class="heart_mark" href="#"> <i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                                    <a class="heart_mark" href="javascript:void(0);"> <i class="fa fa-heart-o" onclick="saveJob({{ $job->id }})" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -77,4 +77,19 @@
 @endsection
 
 @section('customJs')
+<script type="text/javascript">
+    function saveJob(id){
+        
+            $.ajax({
+                url : '{{ route("applyjob") }}',
+                type:'post',
+                data: {id:id},
+                dataTYpe: 'json',
+                success: function(response) {
+                    window.location.href = "{{ url()->current() }}";
+                }
+            })
+        
+    }
+</script>
 @endsection

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +14,10 @@ class AccountController extends Controller
 {
     // THis methos will show user registration page
     public function registration() {
-       return view('front.account.registraion');
+       return view('front.account.registraion',[
+        'jobs' => '',
+        'userArray' => collect(),
+     ]);
     }
 
     //save the user
@@ -47,7 +52,10 @@ class AccountController extends Controller
 
     //This method will show user registraion page
     public function login() {
-         return view('front.account.login');
+         return view('front.account.login', [
+            'jobs' => '',
+            'userArray' => collect(),
+         ]);
     }
 
     public function authenticate(Request $request) {
@@ -58,9 +66,15 @@ class AccountController extends Controller
         ]);
 
         if($validator->passes()) {
-
-            if(Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                 return redirect()->route();
+            $user = DB::table('users')->where('email',$request->email)->get();
+          
+            if(!empty($user)) {
+                $jobs = DB::table('job')->orderBy('created_at','DESC')->get();
+                return view('front.job.jobs', [
+                    'jobs' => $jobs,
+                    'userArray' => $user,
+                   
+                 ]);
             } else {
                 return redirect()->route('account.login')->with('error','Either Email/password is incorrect');
             }
@@ -73,8 +87,11 @@ class AccountController extends Controller
     }
 
     public function logout() {
-        Auth::logout();
-        return redirect()->route('account.login');
+       // Auth::logout();
+       return view('front.account.login', [
+        'jobs' => '',
+        'userArray' => collect(),
+     ]);
     }
 
    

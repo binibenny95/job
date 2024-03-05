@@ -2,7 +2,7 @@
 <html class="no-js" lang="en_AU" />
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>CareerVibe | Find Best Jobs</title>
+	<title>Find Jobs| Find Best Jobs</title>
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no" />
 	<meta name="HandheldFriendly" content="True" />
@@ -24,20 +24,28 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ms-0 ms-sm-0 me-auto mb-2 mb-lg-0 ms-lg-4">
 					<li class="nav-item">
-						<a class="nav-link" aria-current="page" href="index.html">Home</a>
+						<a class="nav-link" aria-current="page" href="{{ route('home') }}">Home</a>
 					</li>	
 					<li class="nav-item">
 						<a class="nav-link" aria-current="page" href="jobs.html">Find Jobs</a>
 					</li>										
 				</ul>		
-				
-				@if(!Auth::check())
-				 <a class="btn btn-outline-primary me-2" href="{{ route('account.login') }}" type="submit">Login</a>
+				@if($userArray->isNotEmpty())
+				@foreach ($userArray as $user)
+				<a class="btn btn-outline-primary me-2"type="name"> Hi , {{ $user->name}}</a>
+				@endforeach
+				@else
+				<a class="btn btn-outline-primary me-2"type="name"> Welcome</a>
+				@endif
+
+				@if($userArray->isNotEmpty())
+				 <a class="btn btn-outline-primary me-2" href="{{ route('account.logout') }}" type="submit">Logout</a>
 				 @else
-				 <a class="btn btn-outline-primary me-2" href="{{ route('account.LOgout') }}" type="submit">Logout</a>
+				 <a class="btn btn-outline-primary me-2" href="{{ route('account.login') }}" type="submit">Login</a>
 				 @endif
+				 
 				
-				<a class="btn btn-primary" href="post-job.html" type="submit">Post a Job</a>
+				
 			</div>
 		</div>
 	</nav>
@@ -71,7 +79,7 @@
 
 <footer class="bg-dark py-3 bg-2">
 <div class="container">
-    <p class="text-center text-white pt-3 fw-bold fs-6">© 2023 xyz company, all right reserved</p>
+    <p class="text-center text-white pt-3 fw-bold fs-6">© 2024 xyz all right reserved</p>
 </div>
 </footer> 
 <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
